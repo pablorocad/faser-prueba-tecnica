@@ -1,11 +1,24 @@
 <div class="container">
 	<h1>Prueba técnica - Estudio Faser</h1>
+
+	<h2>
+		Nueva tarea
+	</h2>
+
+	<form [formGroup]="nuevaTarea">
+		<label for="new-title">Título</label><br>
+		<input type="text" id="new-title" name="new-title" formControlName="title"><br><br>
+		<label for="new-time">Tiempo (minutos)</label><br>
+		<input type="number" id="new-time" name="new-time" formControlName="time"><br><br>
+		<button name="btn-add-row" (click)="addNew()">Crear tarea</button>
+	</form>
+
 	<h2>Listado de tareas</h2>
 	<table>
 		<thead>
 			<tr>
 				<th>Id</th>
-				<th>Titulo</th>
+				<th>Título</th>
 				<th>Tiempo (minutos)</th>
 			</tr>
 		</thead>
@@ -18,4 +31,5 @@
 			</tr>
 		</tbody>
 	</table>
+	
 </div>
