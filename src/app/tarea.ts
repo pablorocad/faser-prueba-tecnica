@@ -3,6 +3,7 @@ export class Tarea {
         public id: number,
         public titulo: string,
         public minutos: number,
-        public deleted: boolean
+        public deleted: boolean,
+        public selected: boolean
     ){}
 }

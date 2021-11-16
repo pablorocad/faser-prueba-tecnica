@@ -22,14 +22,21 @@
 	<table>
 		<thead>
 			<tr>
+				<th>
+					<input type="checkbox" id="select" (change)="selectAllTasks()" [checked]="checkAll">
+				</th>
 				<th>Id</th>
 				<th>Título</th>
 				<th>Tiempo (minutos)</th>
+				<th>Opcion</th>
 			</tr>
 		</thead>
 
 		<tbody>
-			<tr *ngFor="let tarea of tareas">
+			<tr *ngFor="let tarea of tareas" [ngStyle]="{'background-color': tarea.selected == true ?  'yellow': 'white'}">
+				<td *ngIf="!tarea.deleted">
+					<input type="checkbox" id={{tarea.id}} (change)="selectTask(tarea)" [checked]="tarea.selected">
+				</td>
 				<th scope="row" *ngIf="!tarea.deleted">{{tarea.id}}</th>
 				<td *ngIf="!tarea.deleted">{{tarea.titulo}}</td>
 				<td *ngIf="!tarea.deleted">{{tarea.minutos}}</td>

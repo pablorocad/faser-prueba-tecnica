@@ -17,6 +17,9 @@ export class AppComponent {
 		time: new FormControl('')
 	});
 
+	//Indicador si todas las tareas fueron seleccionadas
+	checkAll = false;
+
 	constructor(
         public service: AppService,
 	) { }
@@ -37,21 +40,24 @@ export class AppComponent {
 				this.getNewNumber(),
 				this.nuevaTarea.get('title').value,
 				this.nuevaTarea.get('time').value,
+				false,
 				false
 				));
+
+			//Vaciamos nuestras variables del form
+			this.nuevaTarea.get('title').reset('');
+			this.nuevaTarea.get('time').reset('');
 		}
 
-		//Vaciamos nuestras variables del form
-		this.nuevaTarea.get('title').reset('');
-		this.nuevaTarea.get('time').reset('');
+		
 	}
 
-	//Metodo para obtener el número de tarea disponible
+	//Obtener el número de tarea disponible
 	getNewNumber():number{
 		return this.tareas.length + 1;
 	}
 
-	//Metodo para verificar que el form este lleno
+	//Verificar que el form este lleno
 	checkFormValues():Boolean {
 		if(this.nuevaTarea.get('title').value == ''){
 			alert('Ingrese un titulo para la tarea');
@@ -66,9 +72,9 @@ export class AppComponent {
 		return true;
 	}
 
-	//Metodo para eliminar una tarea
+	//Eliminar una tarea
 	deleteRow(tarea: Tarea){
-		//Variable que nso indicara si se eliminara la tarea
+		//Variable que nos indicara si se eliminara la tarea
 		const response = confirm(`¿Desea eliminar la tarea "${tarea.titulo}"?`);
 
 		if(response){
@@ -78,11 +84,36 @@ export class AppComponent {
 
 	//Ordenamiento de la lista
 	sortList(type: boolean){
-		if(type){
+		if(type){ //Si es true ordenara ascendente
 			this.tareas.sort((task1, task2) => (task1.minutos > task2.minutos) ? 1 : -1);
 		}
-		else{
+		else{ //Si es false ordenara descendentemente
 			this.tareas.sort((task1, task2) => (task1.minutos < task2.minutos) ? 1 : -1);
+		}
+	}
+
+	//Cambia el atributo para saber si la tarea fue seleccionada
+	selectTask(tarea: Tarea){
+		tarea.selected = !tarea.selected;
+	}
+
+	//Recorremso el arreglo de tareas para seleccionarlas
+	selectAllTasks(){
+		if(this.checkAll){
+			for(let tarea of this.tareas){
+				if(!tarea.deleted){
+					tarea.selected = false;
+				}
+			}
+			this.checkAll = false;
+		}
+		else{
+			for(let tarea of this.tareas){
+				if(!tarea.deleted){
+					tarea.selected = true;
+				}
+			}
+			this.checkAll = true;
 		}
 	}
 }
