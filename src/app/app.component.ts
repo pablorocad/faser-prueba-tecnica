@@ -68,6 +68,7 @@ export class AppComponent {
 
 	//Metodo para eliminar una tarea
 	deleteRow(tarea: Tarea){
+		//Variable que nso indicara si se eliminara la tarea
 		const response = confirm(`¿Desea eliminar la tarea "${tarea.titulo}"?`);
 
 		if(response){
@@ -75,5 +76,13 @@ export class AppComponent {
 		}
 	}
 
-	
+	//Ordenamiento de la lista
+	sortList(type: boolean){
+		if(type){
+			this.tareas.sort((task1, task2) => (task1.minutos > task2.minutos) ? 1 : -1);
+		}
+		else{
+			this.tareas.sort((task1, task2) => (task1.minutos < task2.minutos) ? 1 : -1);
+		}
+	}
 }
