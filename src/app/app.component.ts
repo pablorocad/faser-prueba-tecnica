@@ -29,15 +29,51 @@ export class AppComponent {
 		this.tareas = await this.service.obtenerTareas();
 	}
 
-	addNew() {
-		this.tareas.push(new Tarea(
-			this.getNewNumber(),
-			this.nuevaTarea.get('title').value,
-			this.nuevaTarea.get('time').value
-			));
+	//Metodo para crear una nueva tarea en la lista
+	addNewRow() {
+		//Verificamos nuestros datos
+		if(this.checkFormValues()){
+			this.tareas.push(new Tarea(
+				this.getNewNumber(),
+				this.nuevaTarea.get('title').value,
+				this.nuevaTarea.get('time').value,
+				false
+				));
+		}
+
+		//Vaciamos nuestras variables del form
+		this.nuevaTarea.get('title').reset('');
+		this.nuevaTarea.get('time').reset('');
 	}
 
+	//Metodo para obtener el número de tarea disponible
 	getNewNumber():number{
 		return this.tareas.length + 1;
 	}
+
+	//Metodo para verificar que el form este lleno
+	checkFormValues():Boolean {
+		if(this.nuevaTarea.get('title').value == ''){
+			alert('Ingrese un titulo para la tarea');
+			return false;
+		}
+		
+		if(this.nuevaTarea.get('time').value <= 0){
+			alert('Ingrese un tiempo para la tarea');
+			return false;
+		}
+
+		return true;
+	}
+
+	//Metodo para eliminar una tarea
+	deleteRow(tarea: Tarea){
+		const response = confirm(`¿Desea eliminar la tarea "${tarea.titulo}"?`);
+
+		if(response){
+			tarea.deleted = true;
+		}
+	}
+
+	
 }
