@@ -1,7 +1,50 @@
 <div class="container">
 	<h1>Prueba técnica - Estudio Faser</h1>
+
+	<h2>
+		Nueva tarea
+	</h2>
+
+	<form [formGroup]="nuevaTarea">
+		<label for="new-title">Título</label><br>
+		<input type="text" id="new-title" name="new-title" formControlName="title"><br><br>
+		<label for="new-time">Tiempo (minutos)</label><br>
+		<input type="number" id="new-time" name="new-time" formControlName="time"><br><br>
+		<button name="btn-add-row" (click)="addNewRow()">Crear tarea</button>
+	</form>
+
+	<br>
+
+	<button name="btn-sort" (click)="sortList(true)">Ordenar ascendente</button>
+	<button name="btn-sort" (click)="sortList(false)">Ordenar descendente</button>
+
 	<h2>Listado de tareas</h2>
-	<ol>
-		<li *ngFor="let tarea of tareas">{{tarea.titulo}} ({{tarea.minutos}} minutos)</li>
-	</ol>
+	<table>
+		<thead>
+			<tr>
+				<th>
+					<input type="checkbox" id="select" (change)="selectAllTasks()" [checked]="checkAll">
+				</th>
+				<th>Id</th>
+				<th>Título</th>
+				<th>Tiempo (minutos)</th>
+				<th>Opcion</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr *ngFor="let tarea of tareas" [ngStyle]="{'background-color': tarea.selected == true ?  'yellow': 'white'}">
+				<td *ngIf="!tarea.deleted">
+					<input type="checkbox" id={{tarea.id}} (change)="selectTask(tarea)" [checked]="tarea.selected">
+				</td>
+				<th scope="row" *ngIf="!tarea.deleted">{{tarea.id}}</th>
+				<td *ngIf="!tarea.deleted">{{tarea.titulo}}</td>
+				<td *ngIf="!tarea.deleted">{{tarea.minutos}}</td>
+				<td *ngIf="!tarea.deleted">
+					<button name="btn-delete-row" (click)="deleteRow(tarea)">Eliminar</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
 </div>
