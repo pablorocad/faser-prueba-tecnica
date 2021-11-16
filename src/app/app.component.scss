@@ -5,3 +5,12 @@
 h1 {
     margin-top: 0px;
 }
+
+table, th, td{
+    border: 1.5px solid;
+    border-color: darkgray;
+}
+
+th, td{
+    padding: 5px;
+}
